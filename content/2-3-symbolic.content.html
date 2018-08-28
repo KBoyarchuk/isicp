@@ -153,7 +153,7 @@ C.prompt("scheme-memq-apple-apple-sauce-apple-pear", ["scheme-define-memq"]);
 (memq 'red '(red shoes blue socks))
 </div>
 <script>
-C.prompt("scheme-ex-interpret-quotes");
+C.no_output_frozen_prompt("scheme-ex-interpret-quotes");
 </script>
 </div>
 
@@ -533,7 +533,7 @@ by adding a new clause to the <tt>deriv</tt> program and defining appropriate pr
 (deriv '(* x y (+ x 3)) 'x)
 </div>
 <script>
-C.prompt("scheme-ex-test-deriv-sum");
+C.no_output_frozen_prompt("scheme-ex-test-deriv-sum");
 </script>
 
 <p> Try to do this by changing only the representation for sums and products, without changing the <tt>deriv</tt> procedure at all. For example, the <tt>addend</tt> of a sum would be the first term, and the <tt>augend</tt> would be the sum of the rest of the terms.
@@ -670,7 +670,7 @@ C.prompt("scheme-define-ordered-intersection-set");
 <p> We can do better than the ordered-list representation by arranging the set elements in the form of a tree. Each node of the tree holds one element of the set, called the ``entry'' at that node, and a link to each of two other (possibly empty) nodes. The ``left'' link points to elements smaller than the one at the node, and the ``right'' link to elements greater than the one at the node. Figure 2-16 shows some trees that represent the set <tt>{1,3,5,7,9,11}.</tt>  The same set may be represented by a tree in a number of different ways. The only thing we require for a valid representation is that all elements in the left subtree be smaller than the node entry and that all elements in the right subtree be larger.
 
 <div class="figure">
-<img src="http://mitpress.mit.edu/sicp/full-text/book/ch2-Z-G-51.gif">
+<img src="images/ch2-Z-G-51.gif">
 <p> <b>Figure 2.16:</b> Various binary trees that represent the set $\{1,3,5,7,9,11\}$.
 </div>
 
@@ -729,7 +729,7 @@ C.prompt("scheme-define-binary-adjoin-set", ["scheme-define-bst-accessors"]);
 <p> The above claim that searching the tree can be performed in a logarithmic number of steps rests on the assumption that the tree is ``balanced,'' i.e., that the left and the right subtree of every tree have approximately the same number of elements, so that each subtree contains about half the elements of its parent. But how can we be certain that the trees we construct will be balanced?  Even if we start with a balanced tree, adding elements with <tt>adjoin-set</tt> may produce an unbalanced result. Since the position of a newly adjoined element depends on how the element compares with the items already in the set, we can expect that if we add elements ``randomly'' the tree will tend to be balanced on the average. But this is not a guarantee. For example, if we start with an empty set and adjoin the numbers 1 through 7 in sequence we end up with the highly unbalanced tree shown in Figure 2-17. In this tree all the left subtrees are empty, so it has no advantage over a simple ordered list. One way to solve this problem is to define an operation that transforms an arbitrary tree into a balanced tree with the same elements. Then we can perform this transformation after every few <tt>adjoin-set</tt> operations to keep our set in balance. There are also other ways to solve this problem, most of which involve designing new data structures for which searching and insertion both can be done in $\Theta(\log(n))$ steps.<a name="footnote_link_2-40" class="footnote_link" href="#footnote_2-40">40</a>
 
 <div class="figure">
-<img src="http://mitpress.mit.edu/sicp/full-text/book/ch2-Z-G-52.gif">
+<img src="images/ch2-Z-G-52.gif">
 <p> <b>Figure 2.17:</b> Unbalanced tree produced by adjoining 1 through 7 in sequence.
 </div>
 
@@ -884,7 +884,7 @@ B 100 D 1011  F 1101  H 1111
 <p> In general, we can attain significant savings if we use variable-length prefix codes that take advantage of the relative frequencies of the symbols in the messages to be encoded. One particular scheme for doing this is called the Huffman encoding method, after its discoverer, David Huffman. A Huffman code can be represented as a binary tree whose leaves are the symbols that are encoded. At each non-leaf node of the tree there is a set containing all the symbols in the leaves that lie below the node. In addition, each symbol at a leaf is assigned a weight (which is its relative frequency), and each non-leaf node contains a weight that is the sum of all the weights of the leaves lying below it. The weights are not used in the encoding or the decoding process. We will see below how they are used to help construct the tree.
 
 <div class="figure">
-<img src="http://mitpress.mit.edu/sicp/full-text/book/ch2-Z-G-53.gif">
+<img src="images/ch2-Z-G-53.gif">
 <p> <b>Figure 2.18:</b> A Huffman encoding tree.
 </div>
 
@@ -896,7 +896,7 @@ B 100 D 1011  F 1101  H 1111
 
 <h4> Generating Huffman trees </h4>
 
-<p> Given an ``alphabet'' of symbols and their relative frequencies, how do we construct the ``best'' code?  (In other words, which tree will encode messages with the fewest bits?)  Huffman gave an algorithm for doing this and showed that the resulting code is indeed the best variable-length code for messages where the relative frequency of the symbols matches the frequencies with which the code was constructed. We will not prove this optimality of Huffman codes here, but we will show how Huffman trees are constructed.<a name="footnote_link_2-42" class="footnote_link" href="#footnote_2-42">42</a>
+<p> Given an "alphabet" of symbols and their relative frequencies, how do we construct the "best" code?  (In other words, which tree will encode messages with the fewest bits?)  Huffman gave an algorithm for doing this and showed that the resulting code is indeed the best variable-length code for messages where the relative frequency of the symbols matches the frequencies with which the code was constructed. We will not prove this optimality of Huffman codes here, but we will show how Huffman trees are constructed.<a name="footnote_link_2-42" class="footnote_link" href="#footnote_2-42">42</a>
 
 <p> The algorithm for generating a Huffman tree is very simple. The idea is to arrange the tree so that the symbols with the lowest frequency appear farthest away from the root. Begin with the set of leaf nodes, containing symbols and their frequencies, as determined by the initial data from which the code is to be constructed. Now find two leaves with the lowest weights and merge them to produce a node that has these two nodes as its left and right branches. The weight of the new node is the sum of the two weights. Remove the two leaves from the original set and replace them by this new node. Now continue this process. At each step, merge two nodes with the smallest weights, removing them from the set and replacing them with a node that has these two as its left and right branches. The process stops when there is only one node left, which is the root of the entire tree. Here is how the Huffman tree of Figure 2-18 was generated:
 
@@ -1046,7 +1046,7 @@ C.prompt("scheme-define-make-leaf-set");
 (define sample-message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
 </div>
 <script>
-C.prompt("scheme-define-sample-tree");
+C.no_output_frozen_prompt("scheme-define-sample-tree");
 </script>
 
 <p> Use the <tt>decode</tt> procedure to decode the message, and give the result.
@@ -1065,7 +1065,7 @@ C.prompt("scheme-define-sample-tree");
               (encode (cdr message) tree))))
 </div>
 <script>
-C.prompt("scheme-define-encode");
+C.no_output_frozen_prompt("scheme-define-encode");
 </script>
 
 <p> <tt>encode-symbol</tt> is a procedure, which you must write, that returns the list of bits that encodes a given symbol according to a given tree. You should design <tt>encode-symbol</tt> so that it signals an error if the symbol is not in the tree at all. Test your procedure by encoding the result you obtained in Exercise 2-67 with the sample tree and seeing whether it is the same as the original sample message.
@@ -1081,7 +1081,7 @@ C.prompt("scheme-define-encode");
   (successive-merge (make-leaf-set pairs)))
 </div>
 <script>
-C.prompt("scheme-define-generate-huffman-tree");
+C.no_output_frozen_prompt("scheme-define-generate-huffman-tree");
 </script>
 
 <p> <tt>make-leaf-set</tt> is the procedure given above that transforms the list of pairs into an ordered set of leaves. <tt>Successive-merge</tt> is the procedure you must write, using <tt>make-code-tree</tt> to successively merge the smallest-weight elements of the set until there is only one element left, which is the desired Huffman tree. (This procedure is slightly tricky, but not really complicated. If you find yourself designing a complex procedure, then you are almost certainly doing something wrong. You can take significant advantage of the fact that we are using an ordered set representation.)
@@ -1090,7 +1090,7 @@ C.prompt("scheme-define-generate-huffman-tree");
 <p>
 
 <div class="exercise">
-<p> <b>Exercise 2.70:</b> The following eight-symbol alphabet with associated relative frequencies was designed to efficiently encode the lyrics of 1950s rock songs. (Note that the ``symbols'' of an ``alphabet'' need not be individual letters.)
+<p> <b>Exercise 2.70:</b> The following eight-symbol alphabet with associated relative frequencies was designed to efficiently encode the lyrics of 1950s rock songs. (Note that the "symbols" of an "alphabet" need not be individual letters.)
 
 <pre>
 A     2 NA   16
